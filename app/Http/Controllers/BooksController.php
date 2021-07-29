@@ -8,6 +8,6 @@ class BooksController extends Controller
 {
     public function show()
     {
-    	return view('frontend.pages.books.show');
+        return view('frontend.pages.books.show');
     }
 }
