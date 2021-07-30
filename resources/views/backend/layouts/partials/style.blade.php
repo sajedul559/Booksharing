@@ -6,3 +6,7 @@
 
  <!-- Custom styles for this template-->
  <link href="{{ asset('admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+ <link href="{{ asset('admin/css/custome.css') }}" rel="stylesheet">
+
+ <link href="{{ asset('admin/css/jquery-dataTables.min.css') }}" rel="stylesheet">
+ <script src="{{ asset('admin/vendor/datatables/dataTables.bootstrap4.min.css') }}"></script>
