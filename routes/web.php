@@ -16,6 +16,9 @@ Route::get('/', 'PagesController@index')->name('index');
 Route::get('/books', 'BooksController@index')->name('books.index');
 Route::get('/books/single-book', 'BooksController@show')->name('books.show');
 
+Route::get('/books/categories/{slug}', 'CategoriesController@show')->name('categories.show');
+
+
 
 Route::group(['prefix' => 'adminn'], function () {
     Route::get('/', 'Backend\PagesController@index')->name('admin.index');
@@ -35,9 +38,9 @@ Route::group(['prefix' => 'adminn'], function () {
     Route::group(['prefix' => 'categories'], function () {
         Route::get('/', 'Backend\CategoriesController@index')->name('admin.categories.index');
         Route::get('/{id}', 'Backend\CategoriesController@index')->name('admin.categories.show');
-        Route::post('/store{id}', 'Backend\CategoriesController@store')->name('admin.categories.store');
+        Route::post('/store', 'Backend\CategoriesController@store')->name('admin.categories.store');
         Route::post('/update{id}', 'Backend\CategoriesController@update')->name('admin.categories.update');
-        Route::get('/delete{id}', 'Backend\CategoriesController@destroy')->name('admin.categories.delete');
+        Route::post('/delete{id}', 'Backend\CategoriesController@destroy')->name('admin.categories.delete');
     });
 
     Route::group(['prefix' => 'publishers'], function () {
