@@ -1,16 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Author;
 
-
-
-
-
-class AuthorsController extends Controller
+class TestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +13,7 @@ class AuthorsController extends Controller
      */
     public function index()
     {
-        $authors = Author::all();
-        return view('backend.pages.authors.index', compact('authors'));
+        //
     }
 
     /**
@@ -41,19 +34,7 @@ class AuthorsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|max:25',
-            'description' => 'nullable|min:5',
-        ]);
-
-        $author = new Author();
-        $author->name = $request->name;
-        $author->link = str_slug($request->name);
-        $author->description = $request->description;
-        $author->save();
-        session()->flash('success', 'Author Created Success');
-
-        return back();
+        //
     }
 
     /**
@@ -87,19 +68,7 @@ class AuthorsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|max:25',
-            'description' => 'nullable|min:5',
-        ]);
-
-
-        $author =  Author::find($id);
-        $author->name = $request->name;
-        // $author->link = str_slug($request->name);
-        $author->description = $request->description;
-        $author->save();
-        session()->flash('success', 'Author Updated Successfully ');
-        return back();
+        //
     }
 
     /**
@@ -110,8 +79,6 @@ class AuthorsController extends Controller
      */
     public function destroy($id)
     {
-        $author =  Author::find($id);
-        $author->delete();
-        return back();
+        //
     }
 }

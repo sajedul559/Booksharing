@@ -30,9 +30,9 @@ class CreateBooksTable extends Migration
 
             $table->unsignedInteger('user_id')->nullable()->index();
 
-            $table->unsignedInteger('categiry_id')->index();
-            $table->unsignedInteger('publishar_id')->index();
-            $table->unsignedInteger('translatro_id')->nullable()->index();
+            $table->unsignedInteger('category_id')->index();
+            $table->unsignedInteger('publisher_id')->index();
+            $table->unsignedInteger('translator_id')->nullable()->index();
 
 
 

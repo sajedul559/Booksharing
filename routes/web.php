@@ -25,7 +25,11 @@ Route::group(['prefix' => 'adminn'], function () {
 
     Route::group(['prefix' => 'books'], function () {
         Route::get('/', 'Backend\BooksController@index')->name('admin.books.index');
-        Route::get('/{id}', 'Backend\BooksController@index')->name('admin.books.show');
+        // Route::get('/{id}', 'Backend\BooksController@index')->name('admin.books.show');
+        Route::get('/create', 'Backend\BooksController@create')->name('admin.books.create');
+        Route::get('/edit{id}', 'Backend\BooksController@edit')->name('admin.books.edit');
+        Route::post('/store', 'Backend\BooksController@store')->name('admin.books.store');
+        Route::post('/update{id}', 'Backend\BooksController@update')->name('admin.books.update');
     });
     Route::group(['prefix' => 'authors'], function () {
         Route::get('/', 'Backend\AuthorsController@index')->name('admin.authors.index');
@@ -51,3 +55,7 @@ Route::group(['prefix' => 'adminn'], function () {
         Route::post('/delete{id}', 'Backend\PublilshersController@destroy')->name('admin.publishers.delete');
     });
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

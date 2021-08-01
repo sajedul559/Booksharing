@@ -7,6 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Category;
 
 
+
+
+
+
 class CategoriesController extends Controller
 {
     /**

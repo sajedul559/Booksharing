@@ -9,6 +9,10 @@
 
 <!-- Core plugin JavaScript-->
 <script src="{{ asset('admin/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+<!-- Select2 JS-->
+<script src="{{ asset('admin/js/select2.min.js') }}"></script>
+<!-- Summernote JS-->
+<script src="{{ asset('admin/js/summernote.js') }}"></script>
 
 <!-- Custom scripts for all pages-->
 <script src="{{ asset('admin/js/sb-admin-2.min.js') }}"></script>
@@ -23,5 +27,9 @@
 <script>
     $(document).ready(function() {
         $('#myTable').DataTable();
+        $('.select2').select2();
+        $('#summernote').summernote();
+
+
     });
 </script>
