@@ -60,6 +60,23 @@
 
   <div class="top-body pt-4 pb-4">
     <div class="container">
+      @if (Session::has('status'))
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="alert alert-success mt-1">
+                    <p>{{ Session::get('status') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
       <div class="row">
 
         <div class="col-md-3">
