@@ -63,7 +63,7 @@
       <div class="row">
 
         <div class="col-md-3">
-          <div class="card card-body single-top-link" onclick="location.href='login.html'">
+          <div class="card card-body single-top-link" onclick="location.href='{{route('login')}}'">
             <h4>Sign In</h4>
             <i class="fa fa-sign-in-alt"></i>
             <p>
@@ -73,7 +73,7 @@
         </div> <!-- Single Col -->
 
         <div class="col-md-3">
-          <div class="card card-body single-top-link"  onclick="location.href='register.html'">
+          <div class="card card-body single-top-link"  onclick="location.href='{{route('register')}}'">
             <h4>Create New</h4>
             <i class="fa fa-user"></i>
             <p>
