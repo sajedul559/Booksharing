@@ -126,41 +126,55 @@
   <div class="advance-search">
     <div class="container">
       <h3>Advance Search</h3>
-      <form>
+      <form action="{{route('books.searched.advance')}}" method="GET">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-3">
             <div class="form-group">
                 <label for="exampleInputEmail1">Book Title/Description</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Book Title/Description">
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="t" placeholder="Book Title/Description">
+
               </div>
           </div>
-          <div class="col-md-2">
+          {{-- <div class="col-md-2">
             <div class="form-group">
                 <label for="exampleInputEmail1">Author</label>
                 <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Book Author">
               </div>
-          </div>
-          <div class="col-md-2">
+          </div> --}}
+          <div class="col-md-3d">
             <div class="form-group">
                 <label for="exampleInputEmail1">Publication</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Book Publication">
+                <select class="form-control" name="p"> 
+                  <option value="">Select a publisher</option>
+                  @foreach($publishers as $publish)
+                  <option value="{{$publish->id }}">{{$publish->name }}</option>
+                  @endforeach
+                
+                </select>
               </div>
           </div>
           <div class="col-md-3">
             <div class="form-group">
                 <label for="exampleInputEmail1">Book Category</label>
-                <select class="form-control"> 
-                  <option>Select a category</option>
-                  <option>Java Programming</option>
-                  <option>C Programming</option>
-                  <option>C++ Programming</option>
+                <select class="form-control" name="c"> 
+                  <option value="">Select a category</option>
+                  @foreach($categories as $cat)
+                  <option value="{{$cat->id }}">{{$cat->name }}</option>
+                  @endforeach
+                
                 </select>
               </div>
           </div>
-          <div class="col-md-1">
-               <button type="submit" class="btn btn-success btn-lg" name="">
+          <div class="col-md-2 mt-4">
+            <p class="mt-2">
+              <button type="submit" class="btn btn-success btn-lg" name="">
                 <i class="fa fa-search"></i> Search
-               </button>
+             </button>
+
+            </p>
+             
+
+               
           </div>
         </div>
       </form>
@@ -174,124 +188,20 @@
         <div class="col-md-9">
           <h3>Recent Uploaded Books</h3>
 
-          <div class="row">
-
-            <div class="col-md-4">
-              <div class="single-book">
-                <img src="{{ asset('images/books/book.jpg') }}" alt="">
-                <div class="book-short-info">
-                  <h5>Java Programming</h5>
-                  <p>
-                    <a href="" class=""><i class="fa fa-upload"></i> Polash Rana</a>
-                  </p>
-                  <a href="{{ route('books.show') }}" class="btn btn-outline-primary"><i class="fa fa-eye"></i> View</a>
-                  <a href="" class="btn btn-outline-danger"><i class="fa fa-heart"></i> Wishlist</a>
-                  
-                </div>
-              </div>
-            </div> <!-- Single Book Item -->
-            <div class="col-md-4">
-              <div class="single-book">
-                <img src="{{ asset('images/books/book2.jpg') }}" alt="">
-                <div class="book-short-info">
-                  <h5>C Programming</h5>
-                  <p>
-                    <a href="" class=""><i class="fa fa-upload"></i> Polash Rana</a>
-                  </p>
-                  <a href="{{ route('books.show') }}" class="btn btn-outline-primary"><i class="fa fa-eye"></i> View</a>
-                  <a href="" class="btn btn-outline-danger"><i class="fa fa-heart"></i> Wishlist</a>
-                  
-                </div>
-              </div>
-            </div> <!-- Single Book Item -->
-
-            <div class="col-md-4">
-              <div class="single-book">
-                <img src="{{ asset('images/books/book1.jpg') }}" alt="">
-                <div class="book-short-info">
-                  <h5>C++ Programming</h5>
-                  <p>
-                    <a href="" class=""><i class="fa fa-upload"></i> Polash Rana</a>
-                  </p>
-                  <a href="{{ route('books.show') }}" class="btn btn-outline-primary"><i class="fa fa-eye"></i> View</a>
-                  <a href="" class="btn btn-outline-danger"><i class="fa fa-heart"></i> Wishlist</a>
-                  
-                </div>
-              </div>
-            </div> <!-- Single Book Item -->
-            <div class="col-md-4">
-              <div class="single-book">
-                <img src="{{ asset('images/books/book3.jpg') }}" alt="">
-                <div class="book-short-info">
-                  <h5>Java Programming</h5>
-                  <p>
-                    <a href="" class=""><i class="fa fa-upload"></i> Polash Rana</a>
-                  </p>
-                  <a href="{{ route('books.show') }}" class="btn btn-outline-primary"><i class="fa fa-eye"></i> View</a>
-                  <a href="" class="btn btn-outline-danger"><i class="fa fa-heart"></i> Wishlist</a>
-                  
-                </div>
-              </div>
-            </div> <!-- Single Book Item -->
-            <div class="col-md-4">
-              <div class="single-book">
-                <img src="{{ asset('images/books/book4.jpg') }}" alt="">
-                <div class="book-short-info">
-                  <h5>Java Programming</h5>
-                  <p>
-                    <a href="" class=""><i class="fa fa-upload"></i> Polash Rana</a>
-                  </p>
-                  <a href="{{ route('books.show') }}" class="btn btn-outline-primary"><i class="fa fa-eye"></i> View</a>
-                  <a href="" class="btn btn-outline-danger"><i class="fa fa-heart"></i> Wishlist</a>
-                  
-                </div>
-              </div>
-            </div> <!-- Single Book Item -->
+         @include('frontend.pages.books.partials.list')
+         <div class="books-pagination mt-5">
+           {{$books->links() }}
+         </div>
 
 
-          </div>
 
-          <div class="books-pagination mt-5">
-            <nav aria-label="...">
-              <ul class="pagination">
-                <li class="page-item disabled">
-                  <span class="page-link">Previous</span>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active" aria-current="page">
-                  <span class="page-link">
-                    2
-                    <span class="sr-only">(current)</span>
-                  </span>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#">Next</a>
-                </li>
-              </ul>
-            </nav>
-          </div>
+           
+
+          
 
         </div> <!-- Book List -->
 
-        <div class="col-md-3">
-          <div class="widget">
-            <h5 class="mb-2 border-bottom pb-3">
-              Categories
-            </h5>
-
-            <div class="list-group mt-3">
-              <a href="#" class="list-group-item list-group-item-action">
-                Programming
-              </a>
-              <a href="#" class="list-group-item list-group-item-action">Arts</a>
-              <a href="#" class="list-group-item list-group-item-action">Banking</a>
-              <a href="#" class="list-group-item list-group-item-action">Others</a>
-            </div>
-
-          </div> <!-- Single Widget -->
-
-        </div> <!-- Sidebar -->
+        @include('frontend.pages.books.partials.category_sidebar')
 
       </div>
     </div>

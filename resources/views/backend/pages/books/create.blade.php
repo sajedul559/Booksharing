@@ -104,7 +104,7 @@
                 </div>
                 <div class="mt-4">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Add Category</button>
+                    <button type="submit" class="btn btn-primary">Add Book</button>
                 </div>
             </form>
 

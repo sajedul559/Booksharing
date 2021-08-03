@@ -30,6 +30,7 @@
                                 <th>URL</th>
                                 <th>Category</th>
                                 <th>Publisher</th>
+                                <th>User</th>
                                 <th>Statistics</th>
                                 <th>Status</th>
 
@@ -50,9 +51,13 @@
                                     <td>
                                         {{ $book->category->name }}
                                     </td>
-                                     <td>
-                                         {{ $book->publisher->name }}
-                                     </td>
+                                    <td>
+                                        {{ $book->publisher->name }}
+                                    </td>
+                                    <td>
+                                        {{ $book->user->username }}
+                                    </td>
+                                    
                                      <td>
                                          <i class="fa fa-eye"></i>{{$book->total_view}}
                                          <br>

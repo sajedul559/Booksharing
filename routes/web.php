@@ -13,12 +13,29 @@
 
 Route::get('/', 'PagesController@index')->name('index');
 
-Route::get('/books', 'BooksController@index')->name('books.index');
-Route::get('/books/single-book', 'BooksController@show')->name('books.show');
+Route::get('/books/search', 'BooksController@search')->name('books.search');
+
+Route::get('/books/advance_search', 'BooksController@advancesearch')->name('books.searched.advance');
+
+
+
+Route::get('/book', 'BooksController@index')->name('books.index');
+Route::get('/books', 'BooksController@show')->name('books.show');
+Route::get('/books/upload/new', 'BooksController@create')->name('books.upload');
+Route::post('/books/store', 'BooksController@store')->name('books.store');
+
+
 
 Route::get('/books/categories/{slug}', 'CategoriesController@show')->name('categories.show');
 
-
+Route::group(['prefix' => 'users'], function () {
+    Route::get('/profile/{username}', 'UsersController@profile')->name('users.profile');
+    Route::get('/profile/{username}/books', 'UsersController@books')->name('users.books');
+});
+Route::group(['prefix' => 'dashboard'], function () {
+    Route::get('/', 'DashboardController@index')->name('users.dashboard');
+    Route::get('/books', 'DashboardController@books')->name('users.dashboard_books');
+});
 
 Route::group(['prefix' => 'adminn'], function () {
     Route::get('/', 'Backend\PagesController@index')->name('admin.index');
