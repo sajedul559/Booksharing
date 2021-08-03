@@ -14,16 +14,23 @@ use Auth;
 
 class BooksController extends Controller
 {
-    public function show()
+    public function show($slug)
     {
 
-        $books = Book::all();
+        // $books = Book::all();
 
+        // if (!is_null($books)) {
+
+        //     return view('frontend.pages.books.show', compact('books'));
+        // }
+        // return redirect()->route('index');
+
+        $books = Book::where('slug', $slug)->first();
         if (!is_null($books)) {
-
             return view('frontend.pages.books.show', compact('books'));
+        } else {
+            return redirect()->route('index');
         }
-        return redirect()->route('index');
     }
     public function search(Request $request)
     {
@@ -60,16 +67,22 @@ class BooksController extends Controller
             $books = Book::orderBy('id', 'desc')->where('is_approved', 1)
                 ->where('publisher_id',    $searched_publisher)
                 ->paginate(3);
+        } else if (empty($searched) && empty($searched_publisher) && !empty($searched_category)) {
+            $books = Book::orderBy('id', 'desc')->where('is_approved', 1)
+                ->where('category_id',    $searched_category)
+                ->paginate(3);
+        } else {
+            $books = Book::orderBy('id', 'desc')->where('is_approved', 1)
+                ->where('title', 'like', '%' . $searched . '%')
+                ->orWhere('description', 'like', '%' . $searched . '%')
+                ->orWhere('category_id', $searched_category)
+                ->orWhere('publisher_id', $searched_publisher)
+
+                ->paginate(3);
         }
 
 
-        $books = Book::orderBy('id', 'desc')->where('is_approved', 1)
-            ->where('title', 'like', '%' . $searched . '%')
-            ->orWhere('description', 'like', '%' . $searched . '%')
-            ->orWhere('category_id', $searched_category)
-            ->orWhere('publisher_id', $searched_publisher)
 
-            ->paginate(3);
 
         foreach ($books as $book) {
             $book->increment('total_search');

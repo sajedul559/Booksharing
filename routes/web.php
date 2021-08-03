@@ -20,7 +20,7 @@ Route::get('/books/advance_search', 'BooksController@advancesearch')->name('book
 
 
 Route::get('/book', 'BooksController@index')->name('books.index');
-Route::get('/books', 'BooksController@show')->name('books.show');
+Route::get('/books/{slug}', 'BooksController@show')->name('books.show');
 Route::get('/books/upload/new', 'BooksController@create')->name('books.upload');
 Route::post('/books/store', 'BooksController@store')->name('books.store');
 
