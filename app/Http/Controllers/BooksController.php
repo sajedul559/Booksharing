@@ -140,6 +140,8 @@ class BooksController extends Controller
         $book->translator_id = $request->translator_id;
 
         $book->isbn = $request->isbn;
+        $book->quantity = $request->quantity;
+
 
         $book->is_approved = 0;
         $book->user_id = Auth::id();
@@ -167,6 +169,6 @@ class BooksController extends Controller
 
         session()->flash('success', 'A Book Created Success');
 
-        return redirect()->route('admin.books.index');
+        return redirect()->route('books.index');
     }
 }

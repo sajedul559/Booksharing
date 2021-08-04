@@ -35,6 +35,9 @@ Route::group(['prefix' => 'users'], function () {
 Route::group(['prefix' => 'dashboard'], function () {
     Route::get('/', 'DashboardController@index')->name('users.dashboard');
     Route::get('/books', 'DashboardController@books')->name('users.dashboard_books');
+    Route::get('/books/edit/{slug}', 'DashboardController@bookEdit')->name('users.dashboard.books.edit');
+    Route::post('/books/update/{slug}', 'DashboardController@bookUpdate')->name('users.dashboard.books.update');
+    Route::post('/books/delete/{slug}', 'DashboardController@bookDelete')->name('users.dashboard.books.delete');
 });
 
 Route::group(['prefix' => 'adminn'], function () {
@@ -47,6 +50,8 @@ Route::group(['prefix' => 'adminn'], function () {
         Route::get('/edit{id}', 'Backend\BooksController@edit')->name('admin.books.edit');
         Route::post('/store', 'Backend\BooksController@store')->name('admin.books.store');
         Route::post('/update{id}', 'Backend\BooksController@update')->name('admin.books.update');
+
+        Route::post('/delete{id}', 'Backend\BooksController@destroy')->name('admin.books.delete');
     });
     Route::group(['prefix' => 'authors'], function () {
         Route::get('/', 'Backend\AuthorsController@index')->name('admin.authors.index');

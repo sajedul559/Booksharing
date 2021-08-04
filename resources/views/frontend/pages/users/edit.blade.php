@@ -12,20 +12,20 @@
 
   <div class="book-show-area">
     <div class="container">
-        <h3>Add Your Book</h3>
+        <h3>Edit Your Book</h3>
     
-        <form action="{{ route('books.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('users.dashboard.books.update', $book->slug ) }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-md-6">
                     <label for=" title">Book Title</label>
                     <br />
-                    <input type="text" class="form-control" name="title" placeholder="Book Title">
+                    <input type="text" class="form-control" name="title"  value="{{$book->title}}">
                 </div>
                 <div class="col-md-6">
                     <label for="slug ">Book URL Text </label>
                     <br />
-                    <input type="text" class="form-control" name="slug" placeholder="Book URL">
+                    <input type="text" class="form-control" name="slug" value="{{$book->slug}}">
                 </div>
                 <div class="col-md-6">
                     <label for=" ">Book Category</label>
@@ -33,7 +33,7 @@
                     <select name="category_id" id="category_id" class="form-control ">
                         <option value="">Select a category</option>
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            <option value="{{ $category->id }}" {{$book->category_id ==  $category->id ?'selected':'' }}>{{ $category->name }}</option>
 
                         @endforeach
 
@@ -42,7 +42,7 @@
                 <div class="col-md-6">
                     <label for="isbn ">Book ISBN </label>
                     <br />
-                    <input type="text" class="form-control" name="isbn" placeholder="Book ISBN">
+                    <input type="text" class="form-control" name="isbn" value="{{$book->isbn}}">
 
                    
                 </div>
@@ -52,7 +52,7 @@
                     <select name="author_ids[]" id="author_id" class="form-control select2  " multiple>
                         <option value="">Select a author</option>
                         @foreach ($authors as $author)
-                            <option value="{{ $author->id }}">{{ $author->name }}</option>
+                            <option value="{{ $author->id }}" {{App\Book::isAuthorSelected($book->id, $author->id) ? 'selected' : ''}}>{{ $author->name }}</option>
 
                         @endforeach
 
@@ -64,7 +64,7 @@
                     <select name="publisher_id" id="publisher_id" class="form-control ">
                         <option value="">Select a publisher</option>
                         @foreach ($publishers as $publisher)
-                            <option value="{{ $publisher->id }}">{{ $publisher->name }}</option>
+                            <option value="{{ $publisher->id }}" {{$book->publisher_id == $publisher->id?'selected':'' }}>{{ $publisher->name }}</option>
 
                         @endforeach
 
@@ -76,23 +76,23 @@
                     <select name="publish_year" id="publish_year" class="form-control ">
                         <option value="">Select a publisher</option>
                         @for ($year = date('Y'); $year >= 1900; $year--)
-                            <option value="{{ $year }}">{{ $year }}</option>
+                            <option value="{{ $year }}" {{$book->publish_year == $year?'selected':''}}>{{ $year }}</option>
                         @endfor
 
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label for="image ">Book Featured Image</label>
+                    <label for="image ">Book Featured Image(optional) <a href="{{asset('images/books/'.$book->image)}}" target="_blank">Old image</a></label>
                     <br />
-                    <input type="file" name="image" id="image" class="form-control" required>
+                    <input type="file" name="image" id="image" class="form-control" >
                 </div>
                 <div class="col-md-6">
                     <label for="translator_id ">Book Translator</label>
                     <br />
                     <select name="translator_id" id="translator_id" class="form-control select2 ">
                         <option value="">Select a translator book</option>
-                        @foreach ($books as $book)
-                            <option value="{{ $book->id }}">{{ $book->title }}</option>
+                        @foreach ($books as $tb)
+                            <option value="{{ $tb->id }}"{{$book->translator_id == $tb->id?'selected':''}}>{{ $book->title }}</option>
 
                         @endforeach
 
@@ -101,7 +101,7 @@
                 <div class="col-md-6">
                     <label for="image ">Quantity</label>
                     <br />
-                    <input type="number" value="1" name="quantity" id="quantity" class="form-control" required min="1">
+                    <input type="number" value="{{$book->quantity }}" name="quantity" id="quantity" class="form-control" required min="1">
                 </div>
 
 
@@ -110,12 +110,12 @@
                 <div class="col-md-6">
                     <label for="summernote ">Book Detailes</label>
                     <br />
-                    <textarea name="description" id="summernote" cols="30" rows="5" class="form-control"></textarea>
+                    <textarea name="description" id="summernote" cols="30" rows="5" class="form-control">{{  $book->description }}</textarea>
                 </div>
             </div>
             <div class="mt-4">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Add Book</button>
+                <button type="submit" class="btn btn-primary">Update Book</button>
             </div>
         </form>
     </div>

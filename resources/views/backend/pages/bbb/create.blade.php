@@ -94,12 +94,6 @@
                         </select>
                     </div>
 
-                    <div class="col-md-6">
-                        <label for="image ">Quantity</label>
-                        <br />
-                        <input type="number" value="1" name="quantity" id="quantity" class="form-control" required min="1">
-                    </div>
-
 
 
                     <div class="col-md-6">

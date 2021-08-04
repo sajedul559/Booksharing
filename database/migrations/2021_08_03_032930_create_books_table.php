@@ -25,6 +25,7 @@ class CreateBooksTable extends Migration
 
             $table->boolean('is_approved')->default(0);
             $table->unsignedInteger('total_view')->default(0);
+
             $table->unsignedInteger('total_search')->default(0);
             $table->unsignedInteger('total_borrowed')->default(0);
 
@@ -33,6 +34,8 @@ class CreateBooksTable extends Migration
             $table->unsignedInteger('category_id')->index();
             $table->unsignedInteger('publisher_id')->index();
             $table->unsignedInteger('translator_id')->nullable()->index();
+            $table->integer('quantity')->default(1);
+
 
 
 

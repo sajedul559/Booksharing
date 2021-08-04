@@ -1,7 +1,7 @@
 <div class="profile-sidebar border">
     <div class="widget">
       <h5 class="mb-2 border-bottom pb-3">
-        <i class="fa fa-user default-user"></i>
+        <i class="fa fa-user default-user">{{Auth::user()->username}}</i> 
       </h5>
 
       <div class="list-group mt-3">

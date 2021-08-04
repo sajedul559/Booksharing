@@ -83,9 +83,6 @@ class BooksController extends Controller
         $book->translator_id = $request->translator_id;
 
         $book->isbn = $request->isbn;
-        $book->quantity = $request->quantity;
-
-
 
         $book->is_approved = 1;
         $book->user_id = 1;
@@ -153,7 +150,28 @@ class BooksController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // $category =  Category::find($id);
+        // $request->validate([
+        //     'name' => 'required|max:25',
+        //     'slug' => 'nullable|unique:categories,slug,' . $category->id,
+        //     'description' => 'nullable',
+        // ]);
 
+
+        // $category->name = $request->name;
+        // if (empty($request->slug)) {
+        //     $category->slug = str_slug($request->name);
+        // } else {
+        //     $category->slug = $request->slug;
+        // }
+
+        // $category->parent_id = $request->parent_id;
+        // $category->description = $request->description;
+
+        // $category->save();
+        // session()->flash('success', 'A Category Updated Success');
+
+        // return back();
 
         $book =  Book::find($id);
 
@@ -181,8 +199,6 @@ class BooksController extends Controller
         $book->translator_id = $request->translator_id;
 
         $book->isbn = $request->isbn;
-        $book->quantity = $request->quantity;
-
 
         // $book->is_approved = 1;
         // $book->user_id = 1;
@@ -190,11 +206,11 @@ class BooksController extends Controller
         $book->save();
         //Image upload
 
+        if (File::exists('images/books/' . $book->image)) {
+            File::delete('images/books/' . $book->image);
+        }
 
         if ($request->image) {
-            if (File::exists('images/books/' . $book->image)) {
-                File::delete('images/books/' . $book->image);
-            }
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
             $name = time() . '-' . $book->id . '.' . $ext;
@@ -216,7 +232,7 @@ class BooksController extends Controller
         }
 
 
-        session()->flash('success', 'A Book Created Success');
+        session()->flash('success', 'A Book Updated Success');
 
         return redirect()->route('admin.books.index');
     }
@@ -229,21 +245,13 @@ class BooksController extends Controller
      */
     public function destroy($id)
     {
-        $book = Book::find($id);
-        if (!is_null($book)) {
-            if (!is_null($book->image)) {
-                $file_path = "images/books/" . $book->image;
-                if (file_exists($file_path)) {
-                    unlink($file_path);
-                }
-            }
-            $book_authors = BookAuthor::where('book_id', $book->id)->get();
-            foreach ($book_authors as $author) {
-                $author->delete();
-            }
-            $book->delete();
-        }
-        session()->flash('success', 'A Book has deleted success');
+        $child_categories = Category::where('parent_id', $id)->get();
+        foreach ($child_categories as $child)
+            $child->delete();
+        $categories =  Category::find($id);
+        $categories->delete();
+        session()->flash('success', 'A Category Deleted Success');
+
         return back();
     }
 }

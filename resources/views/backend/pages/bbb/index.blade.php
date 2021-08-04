@@ -55,7 +55,7 @@
                                         {{ $book->publisher->name }}
                                     </td>
                                     {{-- <td>
-                                        {{ $book->user->username }}
+                                        {{ $book->user->name }}
                                     </td> --}}
                                     
                                      <td>
