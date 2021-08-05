@@ -38,6 +38,10 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::get('/books/edit/{slug}', 'DashboardController@bookEdit')->name('users.dashboard.books.edit');
     Route::post('/books/update/{slug}', 'DashboardController@bookUpdate')->name('users.dashboard.books.update');
     Route::post('/books/delete/{slug}', 'DashboardController@bookDelete')->name('users.dashboard.books.delete');
+
+    Route::post('/books/request/{slug}', 'DashboardController@bookRequest')->name('books.request');
+    Route::post('/books/request/update/{slug}', 'DashboardController@bookRequestupdate')->name('books.request.update');
+    Route::post('/books/request/delete/{slug}', 'DashboardController@bookRequestdelete')->name('books.request.delete');
 });
 
 Route::group(['prefix' => 'adminn'], function () {

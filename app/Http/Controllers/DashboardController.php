@@ -8,7 +8,7 @@ use App\Book;
 use App\BookAuthor;
 use App\Publisher;
 use App\Author;
-
+use App\BookRequest;
 use App\Category;
 
 use File;
@@ -158,5 +158,95 @@ class DashboardController extends Controller
         }
         session()->flash('success', 'A Book has deleted success');
         return back();
+    }
+
+
+    public function bookRequest(Request $request, $slug)
+    {
+
+
+        $book =  Book::where('slug', $slug)->first();
+
+        $request->validate(
+            [
+                'user_message' => 'required|max:300',
+            ],
+
+            [
+                'user_message.required' => 'Please write your message for request to the book !! '
+
+            ]
+        );
+        if (!is_null($book)) {
+
+            $book_requesst = new BookRequest();
+            $book_requesst->user_id = Auth::id();
+            $book_requesst->book_id = $book->id;
+
+            $book_requesst->status = 1;
+            $book_requesst->user_message = $request->user_message;
+            $book_requesst->save();
+
+            session()->flash('success', 'Book has been request to the user !!');
+
+            return  back();
+        } else {
+            session()->flash('error', 'No Book Found  !!');
+
+            return  back();
+        }
+    }
+    public function bookRequestupdate(Request $request, $request_id)
+    {
+
+
+        $book_request =  BookRequest::find($request_id);
+
+        $request->validate(
+            [
+                'user_message' => 'required|max:300',
+            ],
+
+            [
+                'user_message.required' => 'Please write your message for request to the book !! '
+
+            ]
+        );
+        if (!is_null($book_request)) {
+
+
+            $book_request->user_message = $request->user_message;
+            $book_request->save();
+
+            session()->flash('success', 'Book Request has been Updated !!');
+
+            return  back();
+        } else {
+            session()->flash('error', 'No Book Found  !!');
+
+            return  back();
+        }
+    }
+
+    public function bookRequestdelete($request_id)
+    {
+        $book_request =  BookRequest::find($request_id);
+
+
+        if (!is_null($book_request)) {
+            $book_request->delete();
+
+
+
+
+
+            session()->flash('success', 'Book Request Deleted success !!');
+
+            return  back();
+        } else {
+            session()->flash('error', 'No Book Found  !!');
+
+            return  back();
+        }
     }
 }
