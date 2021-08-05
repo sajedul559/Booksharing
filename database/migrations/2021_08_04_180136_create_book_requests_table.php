@@ -17,6 +17,8 @@ class CreateBookRequestsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('book_id');
             $table->unsignedInteger('user_id');
+            $table->unsignedInteger('ownear_id');
+
             $table->text('user_message')->nullable();
             $table->text('owner_message')->nullable();
 

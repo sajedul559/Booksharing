@@ -17,14 +17,14 @@ Route::get('/books/search', 'BooksController@search')->name('books.search');
 
 Route::get('/books/advance_search', 'BooksController@advancesearch')->name('books.searched.advance');
 
-
+//Books Routs For Frontend
 
 Route::get('/book', 'BooksController@index')->name('books.index');
 Route::get('/books/{slug}', 'BooksController@show')->name('books.show');
 Route::get('/books/upload/new', 'BooksController@create')->name('books.upload');
 Route::post('/books/store', 'BooksController@store')->name('books.store');
 
-
+// User Routes 
 
 Route::get('/books/categories/{slug}', 'CategoriesController@show')->name('categories.show');
 
@@ -32,6 +32,8 @@ Route::group(['prefix' => 'users'], function () {
     Route::get('/profile/{username}', 'UsersController@profile')->name('users.profile');
     Route::get('/profile/{username}/books', 'UsersController@books')->name('users.books');
 });
+
+// Dashboard Routes For Authenticate Users
 Route::group(['prefix' => 'dashboard'], function () {
     Route::get('/', 'DashboardController@index')->name('users.dashboard');
     Route::get('/books', 'DashboardController@books')->name('users.dashboard_books');
@@ -39,16 +41,30 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::post('/books/update/{slug}', 'DashboardController@bookUpdate')->name('users.dashboard.books.update');
     Route::post('/books/delete/{slug}', 'DashboardController@bookDelete')->name('users.dashboard.books.delete');
 
+    Route::get('/books/request_list', 'DashboardController@bookRequestlist')->name('books.request.list');
+
+
     Route::post('/books/request/{slug}', 'DashboardController@bookRequest')->name('books.request');
     Route::post('/books/request/update/{slug}', 'DashboardController@bookRequestupdate')->name('books.request.update');
     Route::post('/books/request/delete/{slug}', 'DashboardController@bookRequestdelete')->name('books.request.delete');
+    Route::post('/books/request_approve/{id}', 'DashboardController@bookRequestapprove')->name('books.request.approve');
+    Route::post('/books/request_reject/{id}', 'DashboardController@bookRequestreject')->name('books.request.reject');
 });
+//Admin Routes
 
 Route::group(['prefix' => 'adminn'], function () {
     Route::get('/', 'Backend\PagesController@index')->name('admin.index');
 
     Route::group(['prefix' => 'books'], function () {
         Route::get('/', 'Backend\BooksController@index')->name('admin.books.index');
+
+        Route::get('/unapprove', 'Backend\BooksController@unapprove')->name('admin.books.unapprove');
+        Route::get('/approve/book', 'Backend\BooksController@approvebook')->name('admin.books.approved');
+
+        Route::post('/approve{id}', 'Backend\BooksController@approve')->name('admin.books.approve');
+        Route::post('/unapprove{id}', 'Backend\BooksController@unapprovebook')->name('admin.books.unapproved');
+
+
         // Route::get('/{id}', 'Backend\BooksController@index')->name('admin.books.show');
         Route::get('/create', 'Backend\BooksController@create')->name('admin.books.create');
         Route::get('/edit{id}', 'Backend\BooksController@edit')->name('admin.books.edit');
@@ -57,6 +73,7 @@ Route::group(['prefix' => 'adminn'], function () {
 
         Route::post('/delete{id}', 'Backend\BooksController@destroy')->name('admin.books.delete');
     });
+    //Authors Routes
     Route::group(['prefix' => 'authors'], function () {
         Route::get('/', 'Backend\AuthorsController@index')->name('admin.authors.index');
         Route::get('/{id}', 'Backend\AuthorsController@index')->name('admin.authors.show');
@@ -64,6 +81,7 @@ Route::group(['prefix' => 'adminn'], function () {
         Route::post('/update{id}', 'Backend\AuthorsController@update')->name('admin.authors.update');
         Route::post('/delete{id}', 'Backend\AuthorsController@destroy')->name('admin.authors.delete');
     });
+    //categories Routes
 
     Route::group(['prefix' => 'categories'], function () {
         Route::get('/', 'Backend\CategoriesController@index')->name('admin.categories.index');
@@ -72,6 +90,7 @@ Route::group(['prefix' => 'adminn'], function () {
         Route::post('/update{id}', 'Backend\CategoriesController@update')->name('admin.categories.update');
         Route::post('/delete{id}', 'Backend\CategoriesController@destroy')->name('admin.categories.delete');
     });
+    //Publishers Routes
 
     Route::group(['prefix' => 'publishers'], function () {
         Route::get('/', 'Backend\PublilshersController@index')->name('admin.publishers.index');

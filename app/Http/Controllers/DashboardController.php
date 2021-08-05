@@ -43,6 +43,19 @@ class DashboardController extends Controller
         }
         return redirect()->route('index');
     }
+    public function bookRequestlist()
+    {
+        $user = Auth::user();
+
+        if (!is_null($user)) {
+            $book_requests = BookRequest::where('owner_id', $user->id)->orderBy('id', 'desc')->paginate(10);
+
+            return view('frontend.pages.users.request_books', compact('user', 'book_requests'));
+        }
+        return redirect()->route('index');
+    }
+
+
 
     public function bookEdit($slug)
     {
@@ -180,8 +193,9 @@ class DashboardController extends Controller
         if (!is_null($book)) {
 
             $book_requesst = new BookRequest();
-            $book_requesst->user_id = Auth::id();
             $book_requesst->book_id = $book->id;
+            $book_requesst->user_id = Auth::id();
+            $book_requesst->owner_id = $book->user_id;
 
             $book_requesst->status = 1;
             $book_requesst->user_message = $request->user_message;
@@ -219,6 +233,52 @@ class DashboardController extends Controller
             $book_request->save();
 
             session()->flash('success', 'Book Request has been Updated !!');
+
+            return  back();
+        } else {
+            session()->flash('error', 'No Book Found  !!');
+
+            return  back();
+        }
+    }
+
+    public function bookRequestapprove(Request $request, $request_id)
+    {
+
+
+        $book_request =  BookRequest::find($request_id);
+
+
+        if (!is_null($book_request)) {
+
+
+            $book_request->status = 2; // confirmed by owner
+            $book_request->save();
+
+            session()->flash('success', 'Book Request has been Approved and sent to the user!!');
+
+            return  back();
+        } else {
+            session()->flash('error', 'No Book Found  !!');
+
+            return  back();
+        }
+    }
+
+    public function bookRequestreject(Request $request, $request_id)
+    {
+
+
+        $book_request =  BookRequest::find($request_id);
+
+
+        if (!is_null($book_request)) {
+
+
+            $book_request->status = 3; // rejected by owner
+            $book_request->save();
+
+            session()->flash('success', 'Book Request has been rejected and sent to the user!!');
 
             return  back();
         } else {

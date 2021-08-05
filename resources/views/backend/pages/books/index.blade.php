@@ -30,7 +30,6 @@
                                 <th>URL</th>
                                 <th>Category</th>
                                 <th>Publisher</th>
-                                <th>User</th>
                                 <th>Statistics</th>
                                 <th>Status</th>
 
@@ -66,16 +65,35 @@
 
                                      </td>
                                      <td>
+
+                                       
+                                      
+                                            
+                                            
+                                    
                                          @if($book->is_approved)
                                          <span class="badge badge-success">
                                              <i class="fa fa-check"></i> Approved
                                          </span>
+                                         <form action="{{route('admin.books.unapproved', $book->id )}}" method="POST">
+                                            @csrf 
+                                            <button type="sumbit" class="btn btn-danger">
+                                               <i class="fa fa-check"></i> Unapprove?</button>
+                                        
+                                        </form>
                                          @else
                                          <span class="badge badge-danger">
                                             <i class="fa fa-times"></i>Not Approved
                                         </span>
+                                        <form action="{{route('admin.books.approve', $book->id )}}" method="POST">
+                                            @csrf 
+                                            <button type="sumbit" class="btn btn-success">
+                                               <i class="fa fa-check"></i> Approve?</button>
+                                        
+                                        </form>
 
                                          @endif
+                                             
                                      </td>
 
 

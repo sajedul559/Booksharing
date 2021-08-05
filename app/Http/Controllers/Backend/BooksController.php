@@ -29,9 +29,44 @@ class BooksController extends Controller
      */
     public function index()
     {
-        $books = Book::all();
+        $books = Book::orderBy('id', 'desc')->get();
 
         return view('backend.pages.books.index', compact('books'));
+    }
+    public function unapprove()
+    {
+        $books = Book::orderBy('id', 'desc')->where('is_approved', 0)->get();
+        $approved = false;
+        return view('backend.pages.books.index', compact('books', 'approved'));
+    }
+
+    public function approvebook()
+    {
+        $books = Book::orderBy('id', 'desc')->where('is_approved', 1)->get();
+        $approved = false;
+        return view('backend.pages.books.index', compact('books', 'approved'));
+    }
+    public function approve($id)
+    {
+        $book = Book::find($id);
+        if (!is_null($book)) {
+            $book->is_approved = 1;
+            $book->save();
+        }
+
+        session()->flash('success', 'Book has been approved');
+        return back();
+    }
+    public function unapprovebook($id)
+    {
+        $book = Book::find($id);
+        if (!is_null($book)) {
+            $book->is_approved = 0;
+            $book->save();
+        }
+
+        session()->flash('success', 'Book has been Unapproved');
+        return back();
     }
 
     /**
@@ -65,6 +100,7 @@ class BooksController extends Controller
             'slug' => 'nullable|unique:books',
             'description' => 'nullable',
             'image' => 'required',
+            'quantity' => 'required|numeric',
         ]);
 
         $book = new Book();
@@ -164,6 +200,7 @@ class BooksController extends Controller
             'slug' => 'nullable|unique:books,slug,' . $book->id,
             'description' => 'nullable',
             'image' => 'nullable',
+            'quantity' => 'required|numeric',
         ]);
 
         $book->title = $request->title;
@@ -216,7 +253,7 @@ class BooksController extends Controller
         }
 
 
-        session()->flash('success', 'A Book Created Success');
+        session()->flash('success', 'A Book Updated Success');
 
         return redirect()->route('admin.books.index');
     }
