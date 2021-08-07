@@ -33,6 +33,29 @@ Route::group(['prefix' => 'users'], function () {
     Route::get('/profile/{username}/books', 'UsersController@books')->name('users.books');
 });
 
+Route::get('/wishlist/book', 'WishlistController@wishlist')->name('wishlist');
+Route::get('/wishlist/test/{user_id}', 'WishlistController@wishlist_test')->name('wishlist_test');
+
+
+
+
+//Wishlish Route
+Route::get('/book/wishlist/{id}', [
+    'uses' => 'WishlistController@wishlist_add',
+    'as' => 'wishlist_add'
+]);
+
+
+// Route::get('/books/wishlist', [
+//     'uses' => 'WishlistController@wishlist',
+//     'as' => 'wishlist'
+// ]);
+
+Route::get('/wishlist/remove/{id}', [
+    'uses' => 'WishlistController@wishlist_remove',
+    'as' => 'wishlist_remove'
+]);
+
 // Dashboard Routes For Authenticate Users
 Route::group(['prefix' => 'dashboard'], function () {
     Route::get('/', 'DashboardController@index')->name('users.dashboard');
@@ -41,19 +64,43 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::post('/books/update/{slug}', 'DashboardController@bookUpdate')->name('users.dashboard.books.update');
     Route::post('/books/delete/{slug}', 'DashboardController@bookDelete')->name('users.dashboard.books.delete');
 
+
+    // Book Request Routes
     Route::get('/books/request_list', 'DashboardController@bookRequestlist')->name('books.request.list');
-
-
     Route::post('/books/request/{slug}', 'DashboardController@bookRequest')->name('books.request');
     Route::post('/books/request/update/{slug}', 'DashboardController@bookRequestupdate')->name('books.request.update');
     Route::post('/books/request/delete/{slug}', 'DashboardController@bookRequestdelete')->name('books.request.delete');
     Route::post('/books/request_approve/{id}', 'DashboardController@bookRequestapprove')->name('books.request.approve');
     Route::post('/books/request_reject/{id}', 'DashboardController@bookRequestreject')->name('books.request.reject');
+    // Book return
+    Route::post('/books/order_return/{id}', 'DashboardController@bookorderreturn')->name(' books.return.store');
+    Route::post('/books/order_return_confirm/{id}', 'DashboardController@bookorderreturnconfirm')->name('books.return');
+
+
+
+    // Book Order Routes 
+    Route::get('/books/order_list', 'DashboardController@bookordertlist')->name('books.order.list');
+
+    Route::post('/books/order_approve/{id}', 'DashboardController@bookorderapprove')->name('books.order.approve');
+    Route::post('/books/order_reject/{id}', 'DashboardController@bookorderreject')->name('books.order.reject');
 });
 //Admin Routes
 
 Route::group(['prefix' => 'adminn'], function () {
     Route::get('/', 'Backend\PagesController@index')->name('admin.index');
+    // Admin Login Routes
+    Route::get('/login', 'Auth\Admin\LoginController@showLoginForm')->name('admin.login');
+    Route::post('/login/submit', 'Auth\Admin\LoginController@login')->name('admin.login.submit');
+    Route::post('/logout/submit', 'Auth\Admin\LoginController@logout')->name('admin.logout');
+
+    // Password Email Send
+    Route::get('/password/reset', 'Auth\Admin\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
+    Route::post('/password/resetPost', 'Auth\Admin\ForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
+
+    // Password Reset
+    Route::get('/password/reset/', 'Auth\Admin\ResetPasswordController@showResetForm')->name('admin.password.reset');
+    Route::post('/password/reset', 'Auth\Admin\ResetPasswordController@reset')->name('admin.password.reset.post');
+
 
     Route::group(['prefix' => 'books'], function () {
         Route::get('/', 'Backend\BooksController@index')->name('admin.books.index');

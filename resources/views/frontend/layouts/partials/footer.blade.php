@@ -19,9 +19,9 @@
       <div class="col-md-3">
         <h4>Top Links</h4>
         <ul>
-          <li><a href="">Home</a></li>
-          <li><a href="">Login</a></li>
-          <li><a href="">Create New Account</a></li>
+          <li><a href="{{route('index')}}">Home</a></li>
+          <li><a href="{{route('login')}}">Login</a></li>
+          <li><a href="{{route('register')}}">Create New Account</a></li>
           <li><a href="">Privacy Policy</a></li>
         </ul>
       </div>
@@ -51,7 +51,7 @@
     </div>
 
     <p class="text-center">
-      &copy; 2019 all rights reserved
+      &copy; 2021 all rights reserved ||  <strong>Sajedul </strong>
     </p>
   </div>
 </div>

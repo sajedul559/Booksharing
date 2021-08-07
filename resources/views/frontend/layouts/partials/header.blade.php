@@ -31,7 +31,12 @@
       
      
       <div class="float-right">
-        <a href="" class="top-header-link"><span class="item">10</span> items in wishlist</a>
+        @if(Auth::check())
+        <div class="">
+          {{-- <a href="{{route('wishlist',Auth::id())}}" class="top-header-link"><span class="fa fa-heart btn btn-success" style="color: red;"></span> wishlist</a> --}}
+         <a href="{{route('wishlist')}}" class="top-header-link"><span class="fa fa-heart btn btn-success" style="color: red;"></span> wishlist</a>
+        </div>
+        @endif
       </div>
       <div class="clearfix"></div>
     </div>
@@ -55,12 +60,12 @@
           <li class="nav-item">
             <a class="nav-link" href="{{route('books.index')}}">Recent Books</a>
           </li>
-          <li class="nav-item dropdown">
+          {{-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter Books By</a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
               <a class="dropdown-item" href="#">Filter By Top Borrowed</a>
             </div>
-          </li>
+          </li> --}}
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Upload Books</a>

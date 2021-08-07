@@ -4,6 +4,8 @@
 @section('content')
 
 <div class="main-content">
+  @include('frontend.layouts.partials.message')
+
   <!-- Carousel -->
   <div id="carouselExampleIndicators" class="carousel slide main-slider" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -77,7 +79,7 @@
     </div>
 @endif
 
-      <div class="row">
+      {{-- <div class="row">
 
         <div class="col-md-3">
           <div class="card card-body single-top-link" onclick="location.href='{{route('login')}}'">
@@ -120,12 +122,12 @@
         </div> <!-- Single Col -->
 
       </div>
-    </div>
-  </div> <!-- End Top Body Links -->
+    </div> --}}
+  {{-- </div> <!-- End Top Body Links --> --}}
 
   <div class="advance-search">
     <div class="container">
-      <h3>Advance Search</h3>
+      <h3 style="margin-left: -824px;">Advance Search</h3>
       <form action="{{route('books.searched.advance')}}" method="GET">
         <div class="row">
           <div class="col-md-3">
@@ -186,9 +188,83 @@
       <div class="row">
 
         <div class="col-md-9">
+
           <h3>Recent Uploaded Books</h3>
 
-         @include('frontend.pages.books.partials.list')
+
+
+          <div class="row">
+            @foreach ($books as $book)
+            <div class="col-md-4">
+              <div class="single-book">
+                <img src="{{asset('images/books/'.$book->image)}}" alt="">
+                <div class="book-short-info">
+                  <h5>{{ $book->title }}    </h5>
+                
+        
+                  <p>
+                    <a href="{{route('users.profile', $book->user->username)}}" class=""> <i class="fa fa-upload"></i>{{ $book->user->username}}</a>
+                  </p>
+        
+                   @if(Route::is('users.dashboard'))
+                   <a href="{{route('books.show', $book->slug)}}" class="btn btn-outline-primary"><i class="fa fa-eye"></i></a>
+        
+                   <a href="{{route('users.dashboard.books.edit', $book->slug)}}" class="btn btn-outline-primary"><i class="fa fa-edit"></i></a>
+                   <a href="#deleteModal{{ $book->id }}" class="btn btn-danger"
+                    data-toggle="modal"><i class="fa fa-trash"></i></a>
+                    
+                       <!-- Dekete Modal -->
+                       <div class="modal fade" id="deleteModal{{ $book->id }}" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog  modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Are you sure to delete ?
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ route('users.dashboard.books.delete', $book->id) }}"
+                                        method="post">
+                                        @csrf
+                                        {{ $book->name }} will be deleted !!
+                                        <div class="mt-4">
+        
+                                            <button type="submit" class="btn btn-primary">Ok, Confirm</button>
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </form>
+        
+                                </div>
+        
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Dekete Modal -->
+        
+        
+                       
+                   @else
+               
+                   <form action="{{route('wishlist_add', $book->id)}}">
+                     <a href="{{route('books.show', $book->slug)}}" class="btn btn-outline-primary"><i class="fa fa-eye">View</i></a>
+        
+                    <button href="" class="btn btn-outline-danger"> <i class="fa fa-heart">Wishlist</i></button>
+        
+        
+                  </form>
+                       
+                   @endif
+                </div>
+              </div>
+            </div>
+                
+            @endforeach
+          </div>
+
          <div class="books-pagination mt-5">
            {{$books->links() }}
          </div>

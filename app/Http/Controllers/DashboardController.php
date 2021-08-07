@@ -54,6 +54,120 @@ class DashboardController extends Controller
         }
         return redirect()->route('index');
     }
+    public function bookordertlist()
+    {
+        $user = Auth::user();
+
+        if (!is_null($user)) {
+            $book_orders = BookRequest::where('user_id', $user->id)->orderBy('id', 'desc')->paginate(10);
+
+            return view('frontend.pages.users.orders_books', compact('user', 'book_orders'));
+        }
+        return redirect()->route('index');
+    }
+    public function bookorderapprove(Request $request, $request_id)
+    {
+
+
+        $book_request =  BookRequest::find($request_id);
+
+
+        if (!is_null($book_request)) {
+
+
+            $book_request->status = 4; // confirmed by user
+            $book_request->save();
+            $book = Book::find($book_request->book_id);
+            $book->decrement('quantity');
+
+            session()->flash('success', 'Book Order has been confirmed!!');
+
+            return  back();
+        } else {
+            session()->flash('error', 'No Book Found  !!');
+
+            return  back();
+        }
+    }
+    public function bookorderreturn(Request $request, $request_id)
+    {
+
+
+        $book_request =  BookRequest::find($request_id);
+
+
+        if (!is_null($book_request)) {
+
+
+            $book_request->status = 6; // Book return
+            $book_request->save();
+
+
+
+            session()->flash('success', 'Book Return !!');
+
+            return  back();
+        } else {
+            session()->flash('error', 'No Book Found  !!');
+
+            return  back();
+        }
+    }
+    public function bookorderreturnconfirm(Request $request, $request_id)
+    {
+
+
+        $book_request =  BookRequest::find($request_id);
+
+
+        if (!is_null($book_request)) {
+
+
+
+            $book_request->status = 7; // Book return  Confirm
+            $book_request->save();
+            $book = Book::find($book_request->book_id);
+            $book->increment('quantity');
+
+
+
+            session()->flash('success', 'Book Return has been successfully !!');
+
+            return  back();
+        } else {
+            session()->flash('error', 'No Book Found  !!');
+
+            return  back();
+        }
+    }
+
+    public function bookorderreject(Request $request, $request_id)
+    {
+
+
+        $book_request =  BookRequest::find($request_id);
+
+
+        if (!is_null($book_request)) {
+
+
+            $book_request->status = 5; // rejected by user
+            $book_request->save();
+
+            session()->flash('success', 'Book Request has been rejected!!');
+
+            return  back();
+        } else {
+            session()->flash('error', 'No Book Found  !!');
+
+            return  back();
+        }
+    }
+
+
+
+
+
 
 
 

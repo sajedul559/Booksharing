@@ -11,4 +11,9 @@ class Category extends Model
         $category = Category::find($parent_id);
         return $category;
     }
+
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
 }

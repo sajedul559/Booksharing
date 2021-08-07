@@ -32,11 +32,71 @@
               <a href="book-view.html" class="btn btn-outline-warning"><i class="fa fa-cart-plus"></i> Add to Cart</a>
               <a href="" class="btn btn-outline-danger"><i class="fa fa-heart"></i> Add to Wishlist</a> --}}
               @auth
+
+              @if ($books->quantity > 0)
               @if (!is_null(App\User::requestBook($books->id)))
+              @if (App\User::requestBook($books->id)->status == 1)
+
               <span class="badge  badge-success" style="padding: 12px; border-radius:0px; font-sixe: 14px;">
                 <i class="fa fa-check"></i> Already Requested
 
               </span>
+              @endif
+              @if (App\User::requestBook($books->id)->status == 2)
+
+              <span class="badge  badge-success" style="padding: 12px; border-radius:0px; font-sixe: 14px;">
+                <i class="fa fa-check"></i> Owner Confirmed
+
+              </span>
+              @endif
+              @if (App\User::requestBook($books->id)->status == 3)
+
+              <span class="badge  badge-danger" style="padding: 12px; border-radius:0px; font-sixe: 14px;">
+                <i class="fa fa-times"></i> Owner Rejected
+
+              </span>
+              @endif
+
+              @if (App\User::requestBook($books->id)->status == 4)
+
+              <span class="badge  badge-success" style="padding: 12px; border-radius:0px; font-sixe: 14px;">
+                <i class="fa fa-check"></i> Reading.....
+
+              </span>
+              @endif
+              @if (App\User::requestBook($books->id)->status == 4)
+                  
+              <a href="#returnbookModal{{$books->id }}" class="btn btn-outline-warning" data-toggle="modal"><i class="fa fa-arrow-right " ></i>Return Book </a>
+                  <!--  Request Delete Modal -->
+
+                  <div class="modal fade" id="returnbookModal{{$books->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Return Book  <mark class="btn btn-outline-success">{{$books->title }}</mark></h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="{{route(' books.return.store',  App\User::requestBook($books->id)->id)}}" method="POST">
+                            @csrf
+                            <p>
+                            Are you sure to return the  book ? 
+                            </p>
+                            <button type="submit" class="btn btn-success mt-4"> <i class="fa fa-send"></i>Send Return Request</button>
+                            <button type="button" class="btn btn-secondary mt-4" data-dismiss="modal">Cancel</button>
+
+                          </form>
+                        </div>
+                    
+                      </div>
+                    </div>
+                  </div>
+
+              </span>
+              @endif
+
               @if (App\User::requestBook($books->id)->status == 1)
               <a href="#requestupdateModal{{$books->id }}" class="btn btn-outline-success" data-toggle="modal"><i class="fa fa-check " ></i> Update Request </a>
               <a href="#requestdeleteModal{{$books->id }}" class="btn btn-outline-danger" data-toggle="modal"><i class="fa fa-times " ></i> Delete Request </a>
@@ -107,6 +167,14 @@
 
                   
               @endif
+
+              @else
+              <span class="badge badge-success" style="padding:12px; border-radius:0px; font-size 14px;">
+                Someone is reading this book.....
+              </span>
+                  
+              @endif
+             
                   
               @endauth
 

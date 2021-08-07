@@ -5,6 +5,8 @@
         <img src="{{asset('images/books/'.$book->image)}}" alt="">
         <div class="book-short-info">
           <h5>{{ $book->title }}  </h5>
+        
+
           <p>
             <a href="{{route('users.profile', $book->user->username)}}" class=""> <i class="fa fa-upload"></i>{{ $book->user->username}}</a>
           </p>
@@ -51,9 +53,20 @@
 
                
            @else
+           @php($wishlist=App\Wishlist::where('user_id', Auth::id())->get())
+
+             {{-- @if($wishlist->users->user_id)
+
+             @endif --}}
+
            
-           <a href="{{route('books.show', $book->slug)}}" class="btn btn-outline-primary"><i class="fa fa-eye">View</i></a>
-           <a href="" class="btn btn-outline-danger"> <i class="fa fa-heart">Wishlist</i></a>
+           <form action="{{route('wishlist_add', $book->id)}}">
+             <a href="{{route('books.show', $book->slug)}}" class="btn btn-outline-primary"><i class="fa fa-eye">View</i></a>
+
+            <button href="" class="btn btn-outline-danger"> <i class="fa fa-heart">Wishlist</i></button>
+
+
+          </form>
                
            @endif
         </div>

@@ -10,7 +10,7 @@
           <div class="col-md-8 p-1">
             <div class="profile-tab border p-2">
               <h3>
-                My Requested Books
+                My Orders Books
               </h3>
               <hr>
               
@@ -20,7 +20,7 @@
                           <tr>
                               <th>Sl</th>
                               <th>Book</th>
-                              <th>Rrquester</th>
+                              <th>Owner</th>
                               <th>Phone N0</th>
 
                               <th>Message</th>
@@ -28,59 +28,41 @@
 
 
                           </tr>
-                          @foreach ($book_requests as $br)
+                          @foreach ($book_orders as $br)
                           <tbody>
                               <tr>
                                   <td>{{$loop->index+1}}</td>
                                   <td><a href="{{route('books.show', $br->book->slug)}}">{{$br->book->title}}</a></td>
-                                  <td>{{$br->user->name }}</td>
-                                  <td>{{$br->user->phone_no }}</td>
+                                  <td>{{$br->owner->name }}</td>
+                                  <td>{{$br->owner->phone_no }}</td>
 
                                   
 
-                                  <td>{{$br->user_message}}</td>
+                                  <td>{{$br->owner_message}}</td>
                                   <td>
                                       @if ($br->status == 1)
                                        Request sent
                                        @elseif ($br->status == 2)
-                                       Request Approve
+                                       Owner Approve
                                        @elseif ($br->status == 3)
-                                       Request Rejectted
+                                       Owner Rejectted
                                        @elseif ($br->status == 4)
-                                       User Confirm
-                                       @elseif ($br->status == 5)
-                                       User Rejected
-                                       @elseif ($br->status == 6)
-                                       Return Request 
-                                       @elseif ($br->status == 7)
-                                       Return Confirm
+                                        Confirmed By Owner
+                                       @elseif ($br->status == 2)
+                                        Rejected
 
                                           
                                       @endif
-                                      @if ($br->status == 1)
-                                      <form action="{{route('books.request.approve', $br->id)}}" method="POST">
+                                      @if ($br->status == 2)
+                                      <form action="{{route('books.order.approve', $br->id)}}" method="POST">
                                         @csrf
                                           <button type="submit" class="btn btn-success"> Approve</button>
                                       </form>
-                                      <form action="{{route('books.request.reject', $br->id)}}" method="POST"  class="mt-1">
+                                      <form action="{{route('books.order.reject', $br->id)}}" method="POST"  class="mt-1">
                                         @csrf
                                           <button type="submit" class="btn btn-danger"> Reject</button>
                                       </form>
-                                      @elseif($br->status == 2)
-                                      <form action="{{route('books.request.reject', $br->id)}}" method="POST"  class="mt-1">
-                                        @csrf
-                                          <button type="submit" class="btn btn-danger"> Reject</button>
-                                      </form>
-                                      @elseif($br->status == 3)
-                                      <form action="{{route('books.request.approve', $br->id)}}" method="POST">
-                                        @csrf
-                                          <button type="submit" class="btn btn-success"> Approve</button>
-                                      </form>
-                                      @elseif($br->status == 6)
-                                      <form action="{{route('books.return', $br->id)}}" method="POST">
-                                        @csrf
-                                          <button type="submit" class="btn btn-success">Confirm Return</button>
-                                      </form>
+                                     
                                           
                                       @endif
                                      
@@ -91,7 +73,7 @@
 
                               </tr>
                           </tbody>
-                          {{$book_requests->links()}}
+                          {{$book_orders->links()}}
                               
                           @endforeach
                       </thead>

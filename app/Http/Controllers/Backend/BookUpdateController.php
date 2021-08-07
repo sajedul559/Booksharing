@@ -12,6 +12,11 @@ use File;
 
 class BookUpdateController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:ame');
+    }
+
     public function update(Request $request, $id)
     {
         // $category =  Category::find($id);

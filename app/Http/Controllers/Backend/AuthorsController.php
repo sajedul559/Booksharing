@@ -12,6 +12,11 @@ use App\Author;
 
 class AuthorsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:ame');
+    }
     /**
      * Display a listing of the resource.
      *

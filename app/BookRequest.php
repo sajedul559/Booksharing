@@ -8,7 +8,7 @@ use Auth;
 class BookRequest extends Model
 {
     public $fillable = [
-        'id', 'user_id', 'book_id', 'user_message', 'owner_message', 'is_seen',
+        'id', 'user_id', 'owner_id', 'book_id', 'user_message', 'owner_message', 'is_seen',
         'status', 'owner_confirm_time', 'owner_reject_time', 'user_confirm_time',
         'user_reject_time', 'return_time', 'return_confirm_time'
     ];
@@ -21,5 +21,9 @@ class BookRequest extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
     }
 }

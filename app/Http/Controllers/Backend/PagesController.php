@@ -12,6 +12,10 @@ use App\Category;
 
 class PagesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:ame');
+    }
     public function index()
     {
         $total_books = count(Book::all());

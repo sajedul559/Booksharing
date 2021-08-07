@@ -41,7 +41,14 @@
           @if (isset($searched))
           Searched Book By -- <mark>{{ $searched }}</mark>
               @else
+              @if (Route::is('categories.show'))
+            <h1> <mark>  {{ $category->name }}</mark> Category Books</h1>
+
+              @else
               <h3>Recent Uploaded Books</h3>
+                  
+              @endif
+             
 
 
           @endif
