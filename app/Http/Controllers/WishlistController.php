@@ -13,12 +13,16 @@ class WishlistController extends Controller
     public function wishlist_add($id)
     {
 
-        $book = Book::find($id);
-        $wishlist = new Wishlist();
-        $wishlist->user_id = Auth::id();
-        $wishlist->book_id = $book->id;
-        $wishlist->save();
-        return back()->with('success', 'Book added to Wishlist successfully!!');
+        if (Auth::check()) {
+            $book = Book::find($id);
+            $wishlist = new Wishlist();
+            $wishlist->user_id = Auth::id();
+            $wishlist->book_id = $book->id;
+            $wishlist->save();
+            return back()->with('success', 'Book added to Wishlist successfully!!');
+        } else {
+            return back()->with('success', 'Login For Book Added Wishlish!!');
+        }
     }
 
     public function wishlist()
