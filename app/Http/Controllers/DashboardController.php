@@ -48,7 +48,7 @@ class DashboardController extends Controller
         $user = Auth::user();
 
         if (!is_null($user)) {
-            $book_requests = BookRequest::where('owner_id', $user->id)->orderBy('id', 'desc')->paginate(10);
+            $book_requests = BookRequest::where('ownear_id', $user->id)->orderBy('id', 'desc')->paginate(10);
 
             return view('frontend.pages.users.request_books', compact('user', 'book_requests'));
         }
@@ -309,7 +309,7 @@ class DashboardController extends Controller
             $book_requesst = new BookRequest();
             $book_requesst->book_id = $book->id;
             $book_requesst->user_id = Auth::id();
-            $book_requesst->owner_id = $book->user_id;
+            $book_requesst->ownear_id = $book->user_id;
 
             $book_requesst->status = 1;
             $book_requesst->user_message = $request->user_message;
