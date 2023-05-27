@@ -19,28 +19,7 @@ class BookUpdateController extends Controller
 
     public function update(Request $request, $id)
     {
-        // $category =  Category::find($id);
-        // $request->validate([
-        //     'name' => 'required|max:25',
-        //     'slug' => 'nullable|unique:categories,slug,' . $category->id,
-        //     'description' => 'nullable',
-        // ]);
-
-
-        // $category->name = $request->name;
-        // if (empty($request->slug)) {
-        //     $category->slug = str_slug($request->name);
-        // } else {
-        //     $category->slug = $request->slug;
-        // }
-
-        // $category->parent_id = $request->parent_id;
-        // $category->description = $request->description;
-
-        // $category->save();
-        // session()->flash('success', 'A Category Updated Success');
-
-        // return back();
+        
 
         $book =  Book::find($id);
 
