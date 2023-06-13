@@ -26,14 +26,14 @@ class UsersController extends Controller
         }
         return redirect()->route('index');
     }
-    // public function book($username)
-    // {
-    //     $users = User::where('username', $username)->first();
-    //     if (!is_null($users)) {
-    //         $books = $users->books;
+    public function book($username)
+    {
+        $users = User::where('username', $username)->first();
+        if (!is_null($users)) {
+            $books = $users->books;
 
-    //         return view('frontend.pages.users.show', compact('users'));
-    //     }
-    //     return redirect()->route('index');
-    // }
+            return view('frontend.pages.users.show', compact('users'));
+        }
+        return redirect()->route('index');
+    }
 }
