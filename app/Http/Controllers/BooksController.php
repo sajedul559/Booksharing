@@ -16,15 +16,6 @@ class BooksController extends Controller
 {
     public function show($slug)
     {
-
-        // $books = Book::all();
-
-        // if (!is_null($books)) {
-
-        //     return view('frontend.pages.books.show', compact('books'));
-        // }
-        // return redirect()->route('index');
-
         $books = Book::where('slug', $slug)->first();
         if (!is_null($books)) {
             return view('frontend.pages.books.show', compact('books'));
@@ -47,7 +38,6 @@ class BooksController extends Controller
             $book->increment('total_search');
             $book->save();
         }
-
         return view('frontend.pages.books.index', compact('books', 'searched'));
     }
 
@@ -55,10 +45,7 @@ class BooksController extends Controller
     {
         $searched = $request->t;
         $searched_publisher = $request->p;
-
         $searched_category = $request->c;
-
-
         if (empty($searched) && empty($searched_publisher) && empty($searched_category)) {
             return $this->index();
         }
@@ -80,10 +67,6 @@ class BooksController extends Controller
 
                 ->paginate(3);
         }
-
-
-
-
         foreach ($books as $book) {
             $book->increment('total_search');
             $book->save();
@@ -93,10 +76,7 @@ class BooksController extends Controller
     }
     public function index()
     {
-
-
         $books = Book::orderBy('id', 'desc')->where('is_approved', 1)->paginate(3);
-
         return view('frontend.pages.books.index', compact('books'));
     }
 
@@ -157,16 +137,12 @@ class BooksController extends Controller
             $book->image = $name;
             $book->save();
         }
-
-
         foreach ($request->author_ids as $id) {
             $book_author = new BookAuthor();
             $book_author->book_id = $book->id;
             $book_author->author_id = $id;
             $book_author->save();
         }
-
-
         session()->flash('success', 'A Book Created Success');
 
         return redirect()->route('books.index');
