@@ -23,24 +23,6 @@ Route::get('/cancel', 'SslCommerzPaymentController@cancel');
 Route::get('/ipn', 'SslCommerzPaymentController@ipn');
 
 
-
-
-
-
-// Route::get('/example1', [SslCommerzPaymentController::class, 'exampleEasyCheckout']);
-// Route::get('/example2', [SslCommerzPaymentController::class, 'exampleHostedCheckout']);
-
-// Route::post('/pay', [SslCommerzPaymentController::class, 'index']);
-// Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
-
-// Route::post('/success', [SslCommerzPaymentController::class, 'success']);
-// Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
-// Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
-
-// Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
-//SSLCOMMERZ END
-
-
 Route::get('/', 'PagesController@index')->name('index');
 
 Route::get('/books/search', 'BooksController@search')->name('books.search');
@@ -66,20 +48,12 @@ Route::group(['prefix' => 'users'], function () {
 Route::get('/wishlist/book', 'WishlistController@wishlist')->name('wishlist');
 Route::get('/wishlist/test/{user_id}', 'WishlistController@wishlist_test')->name('wishlist_test');
 
-
-
-
 //Wishlish Route
 Route::get('/book/wishlist/{id}', [
     'uses' => 'WishlistController@wishlist_add',
     'as' => 'wishlist_add'
 ]);
 
-
-// Route::get('/books/wishlist', [
-//     'uses' => 'WishlistController@wishlist',
-//     'as' => 'wishlist'
-// ]);
 
 Route::get('/wishlist/remove/{id}', [
     'uses' => 'WishlistController@wishlist_remove',
@@ -93,8 +67,6 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::get('/books/edit/{slug}', 'DashboardController@bookEdit')->name('users.dashboard.books.edit');
     Route::post('/books/update/{slug}', 'DashboardController@bookUpdate')->name('users.dashboard.books.update');
     Route::post('/books/delete/{slug}', 'DashboardController@bookDelete')->name('users.dashboard.books.delete');
-
-
     // Book Request Routes
     Route::get('/books/request_list', 'DashboardController@bookRequestlist')->name('books.request.list');
     Route::post('/books/request/{slug}', 'DashboardController@bookRequest')->name('books.request');
@@ -105,9 +77,6 @@ Route::group(['prefix' => 'dashboard'], function () {
     // Book return
     Route::post('/books/order_return/{id}', 'DashboardController@bookorderreturn')->name(' books.return.store');
     Route::post('/books/order_return_confirm/{id}', 'DashboardController@bookorderreturnconfirm')->name('books.return');
-
-
-
     // Book Order Routes 
     Route::get('/books/order_list', 'DashboardController@bookordertlist')->name('books.order.list');
 
@@ -130,24 +99,17 @@ Route::group(['prefix' => 'adminn'], function () {
     // Password Reset
     Route::get('/password/reset/', 'Auth\Admin\ResetPasswordController@showResetForm')->name('admin.password.reset');
     Route::post('/password/reset', 'Auth\Admin\ResetPasswordController@reset')->name('admin.password.reset.post');
-
-
     Route::group(['prefix' => 'books'], function () {
         Route::get('/', 'Backend\BooksController@index')->name('admin.books.index');
-
         Route::get('/unapprove', 'Backend\BooksController@unapprove')->name('admin.books.unapprove');
         Route::get('/approve/book', 'Backend\BooksController@approvebook')->name('admin.books.approved');
-
         Route::post('/approve{id}', 'Backend\BooksController@approve')->name('admin.books.approve');
         Route::post('/unapprove{id}', 'Backend\BooksController@unapprovebook')->name('admin.books.unapproved');
-
-
         // Route::get('/{id}', 'Backend\BooksController@index')->name('admin.books.show');
         Route::get('/create', 'Backend\BooksController@create')->name('admin.books.create');
         Route::get('/edit{id}', 'Backend\BooksController@edit')->name('admin.books.edit');
         Route::post('/store', 'Backend\BooksController@store')->name('admin.books.store');
         Route::post('/update{id}', 'Backend\BooksController@update')->name('admin.books.update');
-
         Route::post('/delete{id}', 'Backend\BooksController@destroy')->name('admin.books.delete');
     });
     //Authors Routes
