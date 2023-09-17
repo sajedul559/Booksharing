@@ -9,7 +9,6 @@
             Category</a>
 
     </div>
-
     <!-- Add Modal -->
     <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
@@ -213,11 +212,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Dekete Modal -->
-
-
-
-
+                                <!-- Dekete Modal --> 
                             @endforeach
                         </tbody>
                     </table>
